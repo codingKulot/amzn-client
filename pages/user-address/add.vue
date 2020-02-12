@@ -57,7 +57,7 @@
                   <!-- Full name -->
                   <div class="a-spacing-top-medium">
                     <label style="margin-bottom: 0px;">Full Name</label>
-                    <input type="text" class="a-input-text" style="width: 100%;" v-model="fullName"/>
+                    <input type="text" class="a-input-text" style="width: 100%;" v-model="fullName" required/>
                   </div>
                   <!-- Street Address -->
                   <div class="a-spacing-top-medium">
@@ -68,6 +68,7 @@
                       style="width: 100%;"
                       placeholder="Street and number, P.O. box, c/o."
                       v-model="streetAddress1"
+                      required
                     />
                     <!-- Street Address 2 -->
                     <input
@@ -81,17 +82,17 @@
                   <!-- City -->
                   <div class="a-spacing-top-medium">
                     <label style="margin-bottom: 0px;">City</label>
-                    <input type="text" class="a-input-text" style="width: 100%;" v-model="city"/>
+                    <input type="text" class="a-input-text" style="width: 100%;" v-model="city" required/>
                   </div>
                   <!-- State -->
                   <div class="a-spacing-top-medium">
                     <label style="margin-bottom: 0px;">State / Province / Region</label>
-                    <input type="text" class="a-input-text" style="width: 100%;" v-model="state"/>
+                    <input type="text" class="a-input-text" style="width: 100%;" v-model="state" required/>
                   </div>
                   <!-- Zip Code -->
                   <div class="a-spacing-top-medium">
                     <label style="margin-bottom: 0px;">Zip Code</label>
-                    <input type="text" class="a-input-text" style="width: 100%;" v-model="zipCode"/>
+                    <input type="text" class="a-input-text" style="width: 100%;" v-model="zipCode" required/>
                   </div>
                   <!-- Phone Number -->
                   <div class="a-spacing-top-medium">

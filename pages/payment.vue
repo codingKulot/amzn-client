@@ -39,7 +39,7 @@
 
               <!-- Error message  -->
               <div class="a-section a-spacing-none a-spacing-top-small">
-                <b>Error</b>
+                <!-- <b>Error</b> -->
               </div>
               <form action="#" method="post">
                 <div class="a-spacing-medium a-spacing-top-medium">

@@ -23,6 +23,7 @@
                     id="ap_customer_email"
                     class="a-input-text form-control auth-autofocus auth-required-field auth-contact-verification-request-info"
                     v-model="email"
+                    required
                   />
                 </div>
                 <!-- Your Password -->
@@ -35,6 +36,7 @@
                     id="ap_customer_password"
                     class="a-input-text form-control auth-autofocus auth-required-field auth-contact-verification-request-info"
                     v-model="password"
+                    required
                   />
                   <div class="a-alert-container">
                     <div class="a-alert-content" style="text-align: center;">
