@@ -15,14 +15,19 @@
                 <h1 class="a-spacing-small">Create Account</h1>
                 <!-- Your Name -->
                 <div class="a-row a-spacing-base">
-                  <label for="ap_customer_name" class="a-form-label">Your Name</label>
+                  <label for="ap_customer_name" class="a-form-label">Username</label>
                   <input
                     type="text"
                     id="ap_customer_name"
                     class="a-input-text form-control auth-autofocus auth-required-field auth-contact-verification-request-info"
-                    v-model="name"
-                    required
+                    v-model.trim="$v.name.$model" :class="{'is-invalid':$v.name.$error, 'is-valid':!$v.name.$invalid}"
                   />
+                  <div class="valid-feedback">Your Username is valid</div>
+                  <div class="invalid-feedback">
+                    <span v-if="!$v.name.required">Username is required.</span>
+                    <span v-if="!$v.name.minLength">Username must have at least {{ $v.name.$params.minLength.min }}</span>
+                    <span v-if="!$v.name.maxLength">Username must have at most {{ $v.name.$params.maxLength.max }}</span>
+                  </div>
                 </div>
                 <!-- Your Email -->
                 <div class="a-row a-spacing-base">
@@ -31,9 +36,13 @@
                     type="email"
                     id="ap_customer_email"
                     class="a-input-text form-control auth-autofocus auth-required-field auth-contact-verification-request-info"
-                    v-model="email"
-                    required
+                    v-model.trim="$v.email.$model" :class="{'is-invalid':$v.email.$error, 'is-valid':!$v.email.$invalid}"
                   />
+                  <div class="valid-feedback">Your email is valid</div>
+                  <div class="invalid-feedback">
+                    <span v-if="!$v.email.required">Email is required.</span>
+                    <span v-if="!$v.email.isUnique">This email is already registered.</span>
+                  </div>
                 </div>
                 <!-- Your Password -->
                 <div class="a-row a-spacing-base">
@@ -81,6 +90,8 @@
 </template>
 
 <script>
+import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
+
 export default {
     middleware: 'auth',
     auth: 'guest',
@@ -91,6 +102,27 @@ export default {
             email: '',
             password: ''
         }
+    },
+    validations: {
+      name: {
+        required,
+        minLength: minLength(5),
+        maxLength: maxLength(15)
+      },
+      email: { required, email,
+        isUnique (value) {
+          if (value === '') return true;
+
+          const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              // resolve(typeof value === 'string' && value.length % 2 !== 0);
+              resolve(email_regex.test(value));
+            }, 350 + Math.random() * 300);
+          });
+        }
+      }
     },
     methods: {
         async onSignup() {
@@ -121,3 +153,6 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+</style>

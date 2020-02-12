@@ -22,9 +22,12 @@
                     type="email"
                     id="ap_customer_email"
                     class="a-input-text form-control auth-autofocus auth-required-field auth-contact-verification-request-info"
-                    v-model="email"
-                    required
+                    v-model.trim="$v.email.$model" :class="{'is-invalid':$v.email.$error, 'is-valid':!$v.email.$invalid}"
                   />
+                  <div class="valid-feedback">Your email is valid</div>
+                  <div class="invalid-feedback">
+                    <span v-if="!$v.email.required">Email is required.</span>
+                  </div>
                 </div>
                 <!-- Your Password -->
                 <div class="a-row a-spacing-base">
@@ -80,6 +83,7 @@
 </template>
 
 <script>
+import { required, email } from 'vuelidate/lib/validators'
 export default {
     middleware: 'auth',
     auth: 'guest',
@@ -89,6 +93,22 @@ export default {
       email: '',
       password: ''
     };
+  },
+  validations: {
+    email: { required, email,
+      isUnique (value) {
+        if (value === '') return true;
+
+        const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            // resolve(typeof value === 'string' && value.length % 2 !== 0);
+            resolve(email_regex.test(value));
+          }, 350 + Math.random() * 300);
+        });
+      }
+    }
   },
   methods: {
     async onLogin() {

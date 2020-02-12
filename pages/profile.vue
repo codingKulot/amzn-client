@@ -11,12 +11,27 @@
               <!-- Name -->
             <div class="a-spacing-top-medium">
               <label>Name</label>
-              <input class="a-input-text" style="width: 100%" v-model="name" :placeholder="$auth.$state.user.name" required/>
+              <input class="a-input-text" style="width: 100%" :placeholder="$auth.$state.user.name" required
+              v-model.trim="$v.name.$model" :class="{'is-invalid':$v.name.$error, 'is-valid':!$v.name.$invalid}"
+              />
+              <div class="valid-feedback">Your Username is valid</div>
+              <div class="invalid-feedback">
+                <span v-if="!$v.name.required">Username is required.</span>
+                <span v-if="!$v.name.minLength">Username must have at least {{ $v.name.$params.minLength.min }}</span>
+                <span v-if="!$v.name.maxLength">Username must have at most {{ $v.name.$params.maxLength.max }}</span>
+              </div>
             </div>
             <!-- Email -->
             <div class="a-spacing-top-medium">
               <label>Email</label>
-              <input class="a-input-text" style="width: 100%" v-model="email" :placeholder="$auth.$state.user.email" required/>
+              <input class="a-input-text" style="width: 100%" :placeholder="$auth.$state.user.email" required
+              v-model.trim="$v.email.$model" :class="{'is-invalid':$v.email.$error, 'is-valid':!$v.email.$invalid}"
+              />
+              <div class="valid-feedback">Your email is valid</div>
+                <div class="invalid-feedback">
+                  <span v-if="!$v.email.required">Email is required.</span>
+                  <span v-if="!$v.email.isUnique">This email is already registered.</span>
+                </div>
             </div>
             <!-- Password -->
             <div class="a-spacing-top-medium">
@@ -44,6 +59,8 @@
 </template>
 
 <script>
+import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
+
 export default {
     data() {
         return {
@@ -52,7 +69,27 @@ export default {
             password: ''
         };
     },
+    validations: {
+      name: {
+        required,
+        minLength: minLength(5),
+        maxLength: maxLength(15)
+      },
+      email: { required, email,
+        isUnique (value) {
+          if (value === '') return true;
 
+          const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              // resolve(typeof value === 'string' && value.length % 2 !== 0);
+              resolve(email_regex.test(value));
+            }, 350 + Math.random() * 300);
+          });
+        }
+      }
+    },
     methods: {
       async onUpdateProfile() {
         let userData = {
