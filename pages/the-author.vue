@@ -35,16 +35,16 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <!-- Slide 1 -->
-        <div class="carousel-item active" style="background-image: url(/img/image-one.jpg); background-size: 1580px 820px;">
+        <div class="carousel-item active" style="background-image: url(/img/image-one.jpg); background-size: 100% 100%;">
           <div class="carousel-caption text-center">
             <h1>Welcome to my Portfolio</h1>
             <h3>Full Stack Web Developer</h3>
           </div>
         </div>
         <!-- Slide 2 -->
-        <div class="carousel-item" style="background-image: url(/img/image-two.jpg); background-size: 1580px 820px;"></div>
+        <div class="carousel-item" style="background-image: url(/img/image-two.jpg); background-size: 100% 100%;"></div>
         <!-- Slide 3 -->
-        <div class="carousel-item" style="background-image: url(/img/image-three.jpg); background-size: 1580px 820px;"></div>
+        <div class="carousel-item" style="background-image: url(/img/image-three.jpg); background-size: 100% 100%;"></div>
         <!-- Prev & Next Buttons -->
         <a href="#carouselExampleIndicators" class="carousel-control-prev" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>

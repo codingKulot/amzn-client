@@ -83,6 +83,7 @@
 </template>
 
 <script>
+
 import { required, email } from 'vuelidate/lib/validators'
 export default {
     middleware: 'auth',
@@ -113,7 +114,7 @@ export default {
   methods: {
     async onLogin() {
       try {
-          this.$auth.loginWith('local', {
+          await this.$auth.loginWith('local', {
             data: {
               email: this.email,
               password: this.password
@@ -122,6 +123,7 @@ export default {
           this.$router.push('/');
       } catch (err) {
         console.log(err);
+        // this.$store.dispatch('snackbar/setSnackbar', {color: 'red', text: 'The email or password is incorrect.'});
       }
     }
   }
