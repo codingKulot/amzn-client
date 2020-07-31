@@ -1,5 +1,4 @@
 export const state = () => ({
-    // State
     cart: [],
     cartLength: 0,
     shippingPrice: 0,
@@ -41,11 +40,6 @@ export const mutations = {
         };
     },
 
-    // 1. Find the product in the cart.
-    // 2. Change the quantity of the product.
-    // 3. Update the length of the product.
-    // 4. Replace the old product with the updated product.
-
     changeQty(state, {product, qty}) {
         let cartProduct = state.cart.find(prod => prod._id === product._id);
         cartProduct.quantity = qty;
@@ -59,10 +53,6 @@ export const mutations = {
         let indexOfProduct = state.cart.indexOf(cartProduct);
         state.cart.splice(indexOfProduct, 1, cartProduct);
     },
-
-    // 1. remove the product quantity from the cartLength
-    // 2. get the index of the product that we want to delete
-    // 3. remove that product by using splice
     
     removeProduct(state, product) {
         state.cartLength -= product.quantity;
